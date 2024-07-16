@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Api\V1\DayController as Day;
+use App\Http\Controllers\Api\V1\AuthController as Auth;
+use App\Http\Controllers\Api\V1\EventController as Event;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/v1/login', [Auth::class, 'login']);
+Route::post('/register', [Auth::class, 'register']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('/v1/days', Day::class);
+    Route::apiResource('/v1/event', Event::class);
 });

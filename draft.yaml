@@ -1,0 +1,36 @@
+models:
+  Event:
+    eventName: string
+    eventImage: text
+    startDate: date
+    endingDate: date
+
+  Ticket:
+    code: string
+    dateRegister: date      
+    event_day_id: id
+
+  EventDay:
+    ticketAmount: number
+    refDate: date
+    event_id: id
+    day_id: id    
+    relationships:
+      hasMany: Ticket
+
+  Day:
+    nameDay: string
+    relationships:
+      hasMany: EventDay
+
+  Role:
+    name: string
+    description: string
+    role_number: number
+    relationships:
+      hasMany: User
+
+
+
+controllers:
+  # ...

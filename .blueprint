@@ -1,0 +1,23 @@
+created:
+    - database/factories/EventFactory.php
+    - database/factories/TicketFactory.php
+    - database/factories/EventDayFactory.php
+    - database/factories/DayFactory.php
+    - database/factories/RoleFactory.php
+    - database/migrations/2024_07_15_203232_create_events_table.php
+    - database/migrations/2024_07_15_203233_create_tickets_table.php
+    - database/migrations/2024_07_15_203234_create_event_days_table.php
+    - database/migrations/2024_07_15_203235_create_days_table.php
+    - database/migrations/2024_07_15_203236_create_roles_table.php
+    - app/Models/Event.php
+    - app/Models/Ticket.php
+    - app/Models/EventDay.php
+    - app/Models/Day.php
+    - app/Models/Role.php
+models:
+    User: {  }
+    Event: { eventName: string, eventImage: text, startDate: date, endingDate: date }
+    Ticket: { code: string, dateRegister: date, event_day_id: id }
+    EventDay: { ticketAmount: number, refDate: date, event_id: id, day_id: id, relationships: { hasMany: Ticket } }
+    Day: { nameDay: string, relationships: { hasMany: EventDay } }
+    Role: { name: string, description: string, role_number: number, relationships: { hasMany: User } }
