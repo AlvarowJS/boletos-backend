@@ -11,7 +11,8 @@ class EventController extends Controller
     public function index()
     {
         $data = Event::all();
-        return $data;
+        return response()->json(['mensaje' => 'Event success', 'data' => $data], 201);
+        
     }
 
     public function store(Request $request)
@@ -36,6 +37,7 @@ class EventController extends Controller
         $events->eventName = $request->eventName;
         $events->startDate = $request->startDate;
         $events->endingDate = $request->endingDate;
+        $events->user_id = auth()->id();
         $events->save();
 
         return response()->json(['mensaje' => 'Event create', 'data' => $events], 201);
@@ -50,8 +52,9 @@ class EventController extends Controller
 
     }
 
-    public function update(Request $request, string $id)
+    public function updateEvent(Request $request)
     {
+
         $id = $request->id;
         $data = Event::find($id);
         if (!$data) {
@@ -59,25 +62,26 @@ class EventController extends Controller
         }
 
         $data->eventName = $request->eventName;
-        if ($request->hasFile('foto')) {
+        if ($request->hasFile('eventImage')) {
             // Elimina la imagen antigua si existe
-            if ($data->foto) {
+            if ($data->eventImage) {
                 \Storage::disk('public')->delete('eventosFotos/' . $data->foto);
             }
 
             // Sube la nueva imagen
-            $imagen = $request->file('foto');
-            $nombre = uniqid() . '.' . $imagen->getClientOriginalName();
-            $path = 'fotosPortada/' . $nombre;
+            $imagen = $request->file('eventImage');
+            $eventImage = uniqid() . '.' . $imagen->getClientOriginalName();
+            $path = 'eventosFotos/' . $eventImage;
             \Storage::disk('public')->put($path, \File::get($imagen));
-            $data->foto = $nombre;
+            $data->eventImage = $eventImage;
         }
-
-        $data->estado = $request->estado;
-        $data->user_id = $request->user_id;
+        $data->eventName = $request->eventName;
+        $data->startDate = $request->startDate;
+        $data->endingDate = $request->endingDate;
+        $data->user_id = auth()->id();
         $data->save();
 
-        return response()->json(['mensaje' => 'Portada actualizada exitosamente', 'data' => $portada], 200);
+        return response()->json(['mensaje' => 'Portada actualizada exitosamente', 'data' => $data], 200);
     }
 
     public function destroy(string $id)

@@ -23,4 +23,5 @@ Route::post('/register', [Auth::class, 'register']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/v1/days', Day::class);
     Route::apiResource('/v1/event', Event::class);
+    Route::post('v1/event-update', [Event::class, 'updateEvent']);
 });

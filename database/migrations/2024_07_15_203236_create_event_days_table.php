@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('refDate');
             $table->foreignId('event_id')->nullable()->constrained('events');
             $table->foreignId('day_id')->nullable()->constrained('days');
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->timestamps();
         });
     }

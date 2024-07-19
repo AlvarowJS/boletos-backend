@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('eventImage');
             $table->date('startDate');
             $table->date('endingDate');
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->timestamps();
         });
     }
