@@ -37,6 +37,8 @@ class EventController extends Controller
         $events->eventName = $request->eventName;
         $events->startDate = $request->startDate;
         $events->endingDate = $request->endingDate;
+        $events->place = $request->place;
+        $events->description = $request->description;
         $events->user_id = auth()->id();
         $events->save();
 
@@ -65,7 +67,7 @@ class EventController extends Controller
         if ($request->hasFile('eventImage')) {
             // Elimina la imagen antigua si existe
             if ($data->eventImage) {
-                \Storage::disk('public')->delete('eventosFotos/' . $data->foto);
+                \Storage::disk('public')->delete('eventosFotos/' . $data->eventImage);
             }
 
             // Sube la nueva imagen
@@ -78,6 +80,8 @@ class EventController extends Controller
         $data->eventName = $request->eventName;
         $data->startDate = $request->startDate;
         $data->endingDate = $request->endingDate;
+        $data->place = $request->place;
+        $data->description = $request->description;
         $data->user_id = auth()->id();
         $data->save();
 

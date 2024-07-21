@@ -19,6 +19,7 @@ class Ticket extends Model
         'code',
         'dateRegister',
         'event_day_id',
+        'validate',
     ];
 
     /**
@@ -28,7 +29,7 @@ class Ticket extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'dateRegister' => 'date',
+        // 'dateRegister' => 'date',
         'event_day_id' => 'integer',
     ];
 

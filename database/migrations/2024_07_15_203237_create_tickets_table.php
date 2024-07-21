@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->date('dateRegister');
+            $table->dateTime('dateRegister')->nullable();
+            $table->boolean('validate')->default(false);
             $table->foreignId('event_day_id')->nullable()->constrained('event_days');
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->timestamps();

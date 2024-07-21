@@ -2,8 +2,10 @@ models:
   Event:
     eventName: string
     eventImage: text
+    description: text
     startDate: date
     endingDate: date
+    eventName: string
 
   Ticket:
     code: string
