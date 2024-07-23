@@ -10,6 +10,19 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+
+    public function authToken(Request $request)
+    {
+        $token = $request->header('Authorization');
+        $user = Auth::user();
+        $tableName = $user->getTable();
+        $rol = $user->role->role_number;
+        $user->role = $rol;
+        $user->token = $token;
+        $user->table = $tableName;
+        return $user;
+    }
+
     public function login(Request $request)
     {        
         $request->validate([
@@ -26,6 +39,7 @@ class AuthController extends Controller
             return response()->json([
                 'api_token' => $token,
                 'name' => $name,
+                'rol' => $user->role_id
 
             ], 200);
         } else {

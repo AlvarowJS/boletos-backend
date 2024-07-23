@@ -10,7 +10,7 @@ class EventController extends Controller
 {
     public function index()
     {
-        $data = Event::all();
+        $data = Event::with('eventDays')->get();
         return response()->json(['mensaje' => 'Event success', 'data' => $data], 201);
         
     }
@@ -49,8 +49,9 @@ class EventController extends Controller
     {
         $data = Event::find($id);
         if(!$data){            
-            return response()->json(['mensaje' => 'Event update', 'data' => $data], 201);
+            return response()->json(['mensaje' => 'Event not found', 'data' => $data], 201);
         }
+        return response()->json(['mensaje' => 'Event found', 'data' => $data], 201);
 
     }
 

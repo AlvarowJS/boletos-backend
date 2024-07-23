@@ -14,6 +14,17 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\Role::factory(2)->create();
         // \App\Models\User::factory(10)->create();
+        \App\Models\Role::factory()->create([
+            'name' => 'Admin',
+            'description' => 'Total access',
+            'role_number' => 1
+        ]);
+
+        \App\Models\Role::factory()->create([
+            'name' => 'User',
+            'description' => 'Total access',
+            'role_number' => 2
+        ]);
 
         \App\Models\Day::factory()->create([
             'nameDay' => 'Día 1',

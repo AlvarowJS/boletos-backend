@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
 {
@@ -30,7 +31,12 @@ class Event extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'startDate' => 'date',
-        'endingDate' => 'date',
+        // 'startDate' => 'date',
+        // 'endingDate' => 'date',
     ];
+
+    public function eventDays(): HasMany
+    {
+        return $this->hasMany(EventDay::class);
+    }
 }

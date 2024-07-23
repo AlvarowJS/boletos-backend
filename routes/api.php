@@ -23,6 +23,7 @@ Route::post('/v1/login', [Auth::class, 'login']);
 Route::post('/register', [Auth::class, 'register']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/token-auth', [Auth::class, 'authToken']);
     Route::apiResource('/v1/days', Day::class);
     Route::apiResource('/v1/event', Event::class);
     Route::apiResource('/v1/eventday', Eventday::class);
