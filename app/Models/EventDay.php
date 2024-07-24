@@ -30,7 +30,7 @@ class EventDay extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'refDate' => 'date',
+        // 'refDate' => 'date',
         'event_id' => 'integer',
         'day_id' => 'integer',
     ];
