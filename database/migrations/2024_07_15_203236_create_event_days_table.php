@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('ticketAmount');
             $table->date('refDate');
+            $table->string('group');
             $table->foreignId('event_id')->nullable()->constrained('events');
             $table->foreignId('day_id')->nullable()->constrained('days');
             $table->foreignId('user_id')->nullable()->constrained('users');

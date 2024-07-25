@@ -21,6 +21,7 @@ class EventDay extends Model
         'refDate',
         'event_id',
         'day_id',
+        'group'
     ];
 
     /**

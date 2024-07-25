@@ -25,6 +25,7 @@ class EventDayController extends Controller
         $data = new EventDay();
         $data->ticketAmount = $ticketAmount;
         $data->refDate = $request->refDate;
+        $data->group = $request->group;
         $data->event_id = $request->event_id;
         $data->day_id = $request->day_id;
         $data->user_id = $userCurrent;
