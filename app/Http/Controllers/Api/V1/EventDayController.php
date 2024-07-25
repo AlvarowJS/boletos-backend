@@ -26,6 +26,7 @@ class EventDayController extends Controller
         $data->ticketAmount = $ticketAmount;
         $data->refDate = $request->refDate;
         $data->group = $request->group;
+        $data->multiday = $request->multiday;
         $data->event_id = $request->event_id;
         $data->day_id = $request->day_id;
         $data->user_id = $userCurrent;
@@ -70,7 +71,14 @@ class EventDayController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+        $userCurrent = auth()->id();
+        $data = EventDay::find($id);
+        $data->refDate = $request->refDate;
+        $data->group = $request->group;
+        $data->multiday = $request->multiday;
+        $data->user_id = $userCurrent;
+        $data->save();
+
     }
 
     /**

@@ -24,7 +24,7 @@ class TicketController extends Controller
         $queryEvent = 'eventDay';
         if(request()->filled($queryEvent))
         {            
-            $query = Ticket::where('event_day_id', request()->input($queryEvent))->get();
+            $query = Ticket::with('user', 'eventDay','eventDay.event')->where('event_day_id', request()->input($queryEvent))->get();
             $validTickets = $query->where('validate', true)->count();
             $invalidTickets = $query->where('validate', false)->count();
             return response()->json([
@@ -49,7 +49,7 @@ class TicketController extends Controller
     }
 
     public function update(Request $request, string $code)
-    {
+    {        
         $ticket = Ticket::where('code', $code)->first();
         if (!$ticket) {
             return response()->json(['error' => 'Ticket not found'], 404);
