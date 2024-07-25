@@ -22,36 +22,16 @@ class TicketController extends Controller
     public function index()
     {
         $queryEvent = 'eventDay';
-        if (request()->filled($queryEvent)) {
-            // Define el número de registros por página
-            $perPage = 500;
-
-            // Obtén el número de página actual
-            $page = request()->input('page', 1);
-
-            // Consulta con paginación
-            $query = Ticket::with('user', 'eventDay', 'eventDay.event')
-                ->where('event_day_id', request()->input($queryEvent))
-                ->paginate($perPage, ['*'], 'page', $page);
-
-            // Cálculo de tickets válidos e inválidos
-            $validTickets = $query->filter(function ($ticket) {
-                return $ticket->validate;
-            })->count();
-
-            $invalidTickets = $query->filter(function ($ticket) {
-                return !$ticket->validate;
-            })->count();
-
+        if(request()->filled($queryEvent))
+        {            
+            $query = Ticket::where('event_day_id', request()->input($queryEvent))->get();
+            $validTickets = $query->where('validate', true)->count();
+            $invalidTickets = $query->where('validate', false)->count();
             return response()->json([
-                'total' => $query->total(), // Total de registros en la consulta
+                'total' => count($query),   
                 'valid' => $validTickets,
-                'invalid' => $invalidTickets,
-                'data' => $query->items(), // Registros de la página actual
-                'current_page' => $query->currentPage(),
-                'last_page' => $query->lastPage(),
-                'per_page' => $query->perPage(),
-                'total_pages' => $query->lastPage(),
+                'invalid' => $invalidTickets,             
+                'data' => $query  
             ]);
         }
     }
