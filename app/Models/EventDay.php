@@ -22,7 +22,10 @@ class EventDay extends Model
         'event_id',
         'day_id',
         'group',
-        'multiday'
+        'multiday',
+        'artist',
+        'price'
+     
     ];
 
     /**

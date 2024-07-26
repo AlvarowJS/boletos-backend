@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\AuthController as Auth;
 use App\Http\Controllers\Api\V1\EventController as Event;
 use App\Http\Controllers\Api\V1\EventDayController as Eventday;
 use App\Http\Controllers\Api\V1\TicketController as Ticket;
+use App\Http\Controllers\Api\V1\UserController as User;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,7 +29,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/v1/event', Event::class);
     Route::apiResource('/v1/eventday', Eventday::class);
     Route::apiResource('/v1/ticket', Ticket::class);
+    Route::apiResource('/v1/users', User::class);
     Route::post('v1/event-update', [Event::class, 'updateEvent']);
     Route::post('v1/generate-qr', [Ticket::class, 'generateQR']);
+
 
 });

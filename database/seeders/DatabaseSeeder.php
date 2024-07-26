@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\Hash;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -18,6 +18,15 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'description' => 'Total access',
             'role_number' => 1
+        ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Alvaro Japa Salazar',
+            'email' => 'alvaro@gmail.com',
+            'password' => Hash::make('dragonball'),
+            'phone' => '993340954',
+            'status' => true,
+            'role_id' => 1
         ]);
 
         \App\Models\Role::factory()->create([
@@ -53,5 +62,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Day::factory()->create([
             'nameDay' => 'Día 7',
         ]);
+
+
     }
 }

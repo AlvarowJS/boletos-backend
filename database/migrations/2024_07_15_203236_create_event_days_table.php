@@ -17,6 +17,8 @@ return new class extends Migration
             $table->date('refDate');
             $table->string('group');
             $table->boolean('multiday');
+            $table->string('artist')->nullable();
+            $table->float('price',8,2);
             $table->foreignId('event_id')->nullable()->constrained('events');
             $table->foreignId('day_id')->nullable()->constrained('days');
             $table->foreignId('user_id')->nullable()->constrained('users');

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\EventDay;
 use App\Models\Ticket;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -22,16 +24,15 @@ class TicketController extends Controller
     public function index()
     {
         $queryEvent = 'eventDay';
-        if(request()->filled($queryEvent))
-        {            
-            $query = Ticket::with('user', 'eventDay','eventDay.event')->where('event_day_id', request()->input($queryEvent))->get();
+        if (request()->filled($queryEvent)) {
+            $query = Ticket::with('user', 'eventDay', 'eventDay.event')->where('event_day_id', request()->input($queryEvent))->get();
             $validTickets = $query->where('validate', true)->count();
             $invalidTickets = $query->where('validate', false)->count();
             return response()->json([
-                'total' => count($query),   
+                'total' => count($query),
                 'valid' => $validTickets,
-                'invalid' => $invalidTickets,             
-                'data' => $query  
+                'invalid' => $invalidTickets,
+                'data' => $query
             ]);
         }
     }
@@ -49,19 +50,28 @@ class TicketController extends Controller
     }
 
     public function update(Request $request, string $code)
-    {        
-        $ticket = Ticket::where('code', $code)->first();
-        if (!$ticket) {
-            return response()->json(['error' => 'Ticket not found'], 404);
+    {           
+        $today = Carbon::now()->toDateString();
+        $ticket = Ticket::with('EventDay')->where('code', $code)->first();
+        $refDate = $ticket->eventDay->refDate;
+        $multiday = $ticket->eventDay->multiday;
+        if ($multiday || $today == $refDate) {
+            if (!$ticket) {
+                return response()->json(['error' => 'Ticket not found'], 404);
+            }
+            if ($ticket->validate == true) {
+                return response()->json(['error' => 'Ticket already validated'], 400);
+            }
+            $ticket->validate = true;
+            $ticket->dateRegister = now();
+            $ticket->save();
+            return response()->json(['message' => 'Ticket updated successfully', 'data' => $ticket], 200);
         }
-        if ($ticket->validate == true) {
-            return response()->json(['error' => 'Ticket already validated'], 400);
+        else {
+            return response()->json(['message' => 'Ticket out date', 'data' => $ticket], 412);
         }
-        $ticket->validate = true;
-        $ticket->dateRegister = now();
-        $ticket->save();
-        return response()->json(['message' => 'Ticket updated successfully', 'data' => $ticket], 200);
     }
+
 
     public function destroy(string $id)
     {
