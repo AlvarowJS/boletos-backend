@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $usuarios = User::where('role_id', 2)->get();
+        $usuarios = User::all();
         if ($usuarios->isEmpty()) {
             return response()->json(['message' => 'No se encontraron medicos'], Response::HTTP_NOT_FOUND);
         }
@@ -35,7 +35,7 @@ class UserController extends Controller
             'phone' => $validatedData['phone'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
-            'role_id' => 2,
+            'role_id' => $request->role_id,
             'status' => true
         ]);
         
@@ -50,7 +50,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $datos = User::where('role_id', 2)->find($id);
+        // $datos = User::where('role_id', 2)->find($id);
+        $datos = User::find($id);
 
         if (!$datos) {
             return response()->json(['message' => 'Registro no encontrado'], Response::HTTP_NOT_FOUND);
@@ -71,6 +72,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->phone = $request->phone;
         $user->email = $request->email;
+        $user->role_id = $request->role_id;
         $user->status = $request->status;
         $user->password = Hash::make($request->password);
         $user->save();
