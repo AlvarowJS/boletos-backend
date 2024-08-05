@@ -9,9 +9,21 @@ use Illuminate\Http\Request;
 
 class EventDayController extends Controller
 {
+
+    public function ocultarMostrar(string $id)
+    {
+        $data = EventDay::find($id);
+        $data->show = !$data->show;
+        $data->save();
+        return response()->json(['data' => $data]);
+    }
     public function index()
     {
-        $data = EventDay::with('event', 'day')->get();
+        $data = EventDay::with('event', 'day')
+            ->where('show', true)
+            ->orderBy('refDate', 'asc')
+            ->get();
+
         return response()->json(['data' => $data]);
     }
 
@@ -29,6 +41,7 @@ class EventDayController extends Controller
         $data->multiday = $request->multiday;
         $data->artist = $request->artist;
         $data->price = $request->price;
+        $data->show = $request->show;
         $data->event_id = $request->event_id;
         $data->day_id = $request->day_id;
         $data->user_id = $userCurrent;
@@ -78,11 +91,11 @@ class EventDayController extends Controller
         $data->refDate = $request->refDate;
         $data->artist = $request->artist;
         $data->price = $request->price;
+        $data->show = $request->show;
         $data->group = $request->group;
         $data->multiday = $request->multiday;
         $data->user_id = $userCurrent;
         $data->save();
-
     }
 
     /**

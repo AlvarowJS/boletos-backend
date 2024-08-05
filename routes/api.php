@@ -32,6 +32,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/v1/users', User::class);
     Route::post('v1/event-update', [Event::class, 'updateEvent']);
     Route::post('v1/generate-qr', [Ticket::class, 'generateQR']);
-
+    Route::get('v1/ocultar-mostrar/{id}', [Eventday::class, 'ocultarMostrar']);
 
 });
