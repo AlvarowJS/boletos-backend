@@ -24,7 +24,8 @@ class EventDay extends Model
         'group',
         'multiday',
         'artist',
-        'price'
+        'price',
+        'show'
      
     ];
 
