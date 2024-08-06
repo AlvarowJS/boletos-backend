@@ -21,7 +21,7 @@ class EventDayController extends Controller
     {
         $data = EventDay::with('event', 'day')
             ->where('show', true)
-            ->orderBy('refDate', 'asc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return response()->json(['data' => $data]);
