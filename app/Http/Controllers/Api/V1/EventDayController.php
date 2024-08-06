@@ -41,7 +41,7 @@ class EventDayController extends Controller
         $data->multiday = $request->multiday;
         $data->artist = $request->artist;
         $data->price = $request->price;
-        $data->show = $request->show;
+        $data->show = true;
         $data->event_id = $request->event_id;
         $data->day_id = $request->day_id;
         $data->user_id = $userCurrent;
@@ -91,7 +91,7 @@ class EventDayController extends Controller
         $data->refDate = $request->refDate;
         $data->artist = $request->artist;
         $data->price = $request->price;
-        $data->show = $request->show;
+        // $data->show = $request->show;
         $data->group = $request->group;
         $data->multiday = $request->multiday;
         $data->user_id = $userCurrent;
